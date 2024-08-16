@@ -34,7 +34,11 @@
             </nav>
         </div>
     </header>
-
+    <?php
+    require_once '../proyecto-de-votaciones-D.M.C/config/conexion.php'; 
+    
+    $conexion = new Conexion();
+    ?>
     <main class="py-8">
         <section id="proposito" class="bg-white shadow-md rounded-lg p-6 max-w-3xl mx-auto mb-8">
             <h2 class="text-3xl font-semibold mb-4">Bienvenido al Sistema de Votaciones D.M.C</h2>

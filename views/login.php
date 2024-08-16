@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../assets/images/logo-diegomon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/css/index.css">
 
     <script>
         tailwind.config = {
@@ -27,8 +28,8 @@
         <h2 class="text-2xl font-semibold mb-6 text-center">Iniciar Sesión</h2>
         <form action="path_to_your_authentication_script" method="post">
             <div class="mb-4">
-                <label for="username" class="block text-lg font-medium mb-2">Nombre de Usuario</label>
-                <input type="text" id="username" name="username" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                <label for="Numero_Documento" class="block text-lg font-medium mb-2">No.Documeno</label>
+                <input type="number" id="Numero_Documento" name="Numero_Documento" class="w-full p-2 border border-gray-300 rounded-lg" required>
             </div>
             <div class="mb-6">
                 <label for="password" class="block text-lg font-medium mb-2">Contraseña</label>
