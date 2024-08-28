@@ -30,7 +30,7 @@
                 <a href="#proposito" class="mx-2 hover:underline">Propósito</a>
                 <a href="#informacion" class="mx-2 hover:underline">Información</a>
                 <a href="#contacto" class="mx-2 hover:underline">Contacto</a>
-                <a href="../proyecto-de-votaciones-D.M.C/views/login.php" class="mx-2 hover:underline bg-violet-600 px-6 py-2 border rounded-lg text-black transition ease-in-out hover:bg-violet-700 duration-500  " >Ingresar</a>
+                <a href="../proyecto-de-votaciones-D.M.C/views/login.php" class="mx-2 hover:underline bg-blue-600 px-6 py-2 border rounded-lg text-black transition ease-in-out hover:bg-blue-700 duration-500  " >Ingresar</a>
             </nav>
         </div>
     </header>

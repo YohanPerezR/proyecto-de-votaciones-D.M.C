@@ -26,9 +26,9 @@
 <body class="bg-gray-300 text-gray-800 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 class="text-2xl font-semibold mb-6 text-center">Iniciar Sesión</h2>
-        <form action="path_to_your_authentication_script" method="post">
+        <form action="../controller/loginUserController.php" method="post">
             <div class="mb-4">
-                <label for="Numero_Documento" class="block text-lg font-medium mb-2">No.Documeno</label>
+                <label for="Numero_Documento" class="block text-lg font-medium mb-2">No.Documento</label>
                 <input type="number" id="Numero_Documento" name="Numero_Documento" class="w-full p-2 border border-gray-300 rounded-lg" required>
             </div>
             <div class="mb-6">
@@ -39,6 +39,9 @@
         </form>
         <div class="mt-4 text-center">
             <a href="#" class="text-blue-600 hover:underline">¿Olvidaste tu contraseña?</a>
+        </div>
+        <div class="mt-4 text-center">
+            <a href="./registrarse.php" class="text-blue-600 hover:underline">No tienes cuenta? registrate</a>
         </div>
     </div>
 </body>

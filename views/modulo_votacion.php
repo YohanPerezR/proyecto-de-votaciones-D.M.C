@@ -30,7 +30,7 @@
                 <a href="index.html" class="mx-2 hover:underline">Inicio</a>
                 <a href="#candidatos" class="mx-2 hover:underline">Candidatos</a>
                 <a href="#propuestas" class="mx-2 hover:underline">Propuestas</a>
-                <a href="views/login.php" class="mx-2 hover:underline bg-violet-600 px-6 py-2 border rounded-lg text-black transition ease-in-out hover:bg-violet-700 duration-500">Ingresar</a>
+                <a href="login.php" class="mx-2 hover:underline bg-violet-600 px-6 py-2 border rounded-lg text-black transition ease-in-out hover:bg-violet-700 duration-500">Ingresar</a>
             </nav>
         </div>
     </header>
