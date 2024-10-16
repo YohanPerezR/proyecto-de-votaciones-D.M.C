@@ -18,7 +18,7 @@ $votoExistente = Votos::verificarVoto($id_Usuario, $id_Campana);
 
 if ($votoExistente) {
     // Si ya votó, redirigir con mensaje de error
-    header("Location:../views/modulo_votacion.php?error=Ya has votado en esta campaña.");
+    header("Location: ../views/modulo_votacion.php?error=Ya%20has%20votado%20en%20esta%20campaña");
 } else {
     // Registrar el voto
     $voto = new Votos(null, $id_Usuario, $id_Candidato, $id_Campana);
@@ -30,4 +30,5 @@ if ($votoExistente) {
     header("Location: ../views/login.php?voto=exitoso");
     exit();
 }
+
 exit();

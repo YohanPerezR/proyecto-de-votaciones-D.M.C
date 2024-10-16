@@ -17,6 +17,7 @@ $candidatos = Candidatos::mostrarCandidatosPorAño();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../assets/images/logo-diegomon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
@@ -34,7 +35,50 @@ $candidatos = Candidatos::mostrarCandidatosPorAño();
     <title>Votaciones - Sistema de Votaciones D.M.C</title>
 </head>
 
+<script>
+    window.onload = function() {
+        // Detecta si hay un error en la URL
+        var error = new URLSearchParams(window.location.search).get('error');
+        var votoExitoso = new URLSearchParams(window.location.search).get('voto');
+
+        if (error) {
+            // Mostrar modal con mensaje de error
+            document.getElementById('votoModalLabel').innerText = 'Error';
+            document.getElementById('votoModalBody').innerText = decodeURIComponent(error);
+            var modal = new bootstrap.Modal(document.getElementById('votoModal'));
+            modal.show();
+        } else if (votoExitoso === 'exitoso') {
+            // Mostrar modal de éxito
+            document.getElementById('votoModalLabel').innerText = 'Voto Exitoso';
+            document.getElementById('votoModalBody').innerText = '¡Tu voto ha sido registrado correctamente!';
+            var modal = new bootstrap.Modal(document.getElementById('votoModal'));
+            modal.show();
+        }
+    }
+</script>
+
+
 <body class="bg-gray-100 text-gray-800">
+
+    <!-- Modal de mensaje -->
+    <div class="modal fade" id="votoModal" tabindex="-1" aria-labelledby="votoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="votoModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="votoModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <header class="bg-blue-600 text-white py-4">
         <div class="container mx-auto flex justify-between items-center px-4">
             <h1 class="text-2xl font-bold">Sistema de Votaciones D.M.C</h1>
@@ -96,6 +140,8 @@ $candidatos = Candidatos::mostrarCandidatosPorAño();
             <p>&copy; 2024 Sistema de Votaciones. Todos los derechos reservados.</p>
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
