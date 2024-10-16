@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2024 a las 04:59:16
+-- Tiempo de generación: 17-10-2024 a las 00:00:33
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,10 +26,6 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `campana`
 --
-
-CREATE DATABASE votacionesdmc;
-
-use votacionesdmc;
 
 CREATE TABLE `campana` (
   `id_campana` int(11) NOT NULL,
@@ -113,7 +109,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`idUsuario`, `Nombres`, `Apellidos`, `Contrasena`, `id_rol`, `id_curso`) VALUES
-(123123, 'pepe', 'insano', '123123', 1, 2);
+(1031651593, 'Yohan Javier', 'Perez Rodriguez', '1031651593', 1, 2);
 
 -- --------------------------------------------------------
 
