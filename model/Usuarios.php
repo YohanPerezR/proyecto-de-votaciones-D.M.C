@@ -6,20 +6,18 @@ class Usuarios
     private $idUsuarios;
     private $Nombres;
     private $Apellidos;
-    private $Nodocumento;
-    private $Contrasena; // Cambiado de Contraseña a Contrasena
+    private $Contrasena;
     private $Rol;
     private $Curso;
 
     const TABLA = "usuarios";
 
-    public function __construct($id, $nombres, $apellidos, $documento, $contrasena, $rol, $curso)
+    public function __construct($id, $nombres, $apellidos, $contrasena, $rol, $curso)
     {
         $this->idUsuarios = $id;
         $this->Nombres = $nombres;
         $this->Apellidos = $apellidos;
-        $this->Nodocumento = $documento;
-        $this->Contrasena = $contrasena; // Cambiado de Contraseña a Contrasena
+        $this->Contrasena = $contrasena;
         $this->Rol = $rol;
         $this->Curso = $curso;
     }
@@ -38,10 +36,6 @@ class Usuarios
         return $this->Apellidos;
     }
 
-    public function get_Nodocumento()
-    {
-        return $this->Nodocumento;
-    }
 
     public function get_Contrasena()
     { // Cambiado de Contraseña a Contrasena
@@ -60,27 +54,58 @@ class Usuarios
     {
         $db = new Conexion();
 
-        if ($this->idUsuarios) {
-            $consulta = $db->prepare('UPDATE ' . self::TABLA  . ' SET Nombres = :nombres, Apellidos = :apellidos, Nodocumento = :documento, Contrasena = :contrasena, Rol = :rol, Curso = :curso WHERE idUsuarios = :idUsuario');
-            $consulta->bindParam(":idUsuario", $this->idUsuarios);
-            $consulta->bindParam(":nombres", $this->Nombres);
-            $consulta->bindParam(":apellidos", $this->Apellidos);
-            $consulta->bindParam(":documento", $this->Nodocumento);
-            $consulta->bindParam(":contrasena", $this->Contrasena); // Cambiado de Contraseña a Contrasena
-            $consulta->bindParam(":rol", $this->Rol);
-            $consulta->bindParam(":curso", $this->Curso);
-            $consulta->execute();
-        } else {
-            $consulta = $db->prepare('INSERT INTO ' . self::TABLA . ' (Nombres, Apellidos, Nodocumento, Contrasena, Rol, Curso) VALUES (:nombres,:apellidos,:documento,:contrasena,:rol,:curso)');
-            $consulta->bindParam(":nombres", $this->Nombres);
-            $consulta->bindParam(":apellidos", $this->Apellidos);
-            $consulta->bindParam(":documento", $this->Nodocumento);
-            $consulta->bindParam(":contrasena", $this->Contrasena); // Cambiado de Contraseña a Contrasena
-            $consulta->bindParam(":rol", $this->Rol);
-            $consulta->bindParam(":curso", $this->Curso);
-            $consulta->execute();
-        }
+        // Guardar nuevo usuario
+        $consulta = $db->prepare('INSERT INTO ' . self::TABLA . ' (idUsuario,Nombres, Apellidos, Contrasena, id_rol, id_curso) VALUES (:idUsuario, :nombres, :apellidos, :contrasena, :rol, :curso)');
+        $consulta->bindParam(":idUsuario", $this->idUsuarios);
+        $consulta->bindParam(":nombres", $this->Nombres);
+        $consulta->bindParam(":apellidos", $this->Apellidos);
+        $consulta->bindParam(":contrasena", $this->Contrasena);
+        $consulta->bindParam(":rol", $this->Rol);
+        $consulta->bindParam(":curso", $this->Curso);
+        $consulta->execute();
+
         $db = null;
+    }
+
+    public function editar()
+    {
+        $db = new Conexion();
+
+        // Editar usuario existente
+        $consulta = $db->prepare('UPDATE ' . self::TABLA . ' SET Nombres = :nombres, Apellidos = :apellidos, Contrasena = :contrasena, id_rol = :rol, id_curso = :curso WHERE idUsuario = :idUsuario');
+        $consulta->bindParam(":idUsuario", $this->idUsuarios);
+        $consulta->bindParam(":nombres", $this->Nombres);
+        $consulta->bindParam(":apellidos", $this->Apellidos);
+        $consulta->bindParam(":contrasena", $this->Contrasena);
+        $consulta->bindParam(":rol", $this->Rol);
+        $consulta->bindParam(":curso", $this->Curso);
+        $consulta->execute();
+
+        $db = null;
+    }
+
+    public static function buscarByID($id)
+    {
+        $db = new Conexion();
+
+        $consulta = $db->prepare("SELECT
+        u.idUsuario,
+        u.Nombres,
+        u.Apellidos,
+        u.Contrasena,
+        u.id_rol,
+        u.id_curso,
+        r.Nombre as Rol,
+        c.Curso as Curso
+        FROM usuarios u
+        JOIN roles r on u.id_rol = r.idRoles
+        JOIN cursos c on u.id_curso = c.idCursos
+        WHERE idUsuario = :id");
+        $consulta->bindParam(":id", $id);
+        $consulta->execute();
+        $registro = $consulta->fetchAll();
+        $persona = $registro[0];
+        return $persona;
     }
 
     public static function login($documento, $contrasena)
@@ -120,13 +145,58 @@ class Usuarios
             $_SESSION['CURSO'] = $usuario['Curso'];
             $_SESSION['ROL'] = $usuario['Rol'];
 
-            header("Location:../views/modulo_votacion.php");
-            exit();
-            mysqli_close($db);
+            if ($usuario['Rol'] === "Administrador") {
+                header("Location:../views/admin_candidatos.php");
+                exit();
+            } else {
+                header("Location:../views/modulo_votacion.php");
+                exit();
+                mysqli_close($db);
+            }
         } else {
             echo "Datos Incorrectos papus";
         }
     }
+
+    public static function obtenerEstudiantes()
+    {
+        $db = new Conexion();
+        $consulta = $db->prepare("
+        SELECT
+        u.idUsuario,
+        u.Nombres,
+        u.Apellidos,
+        u.Contrasena,
+        u.id_rol,
+        u.id_curso
+        FROM " . self::TABLA . " u
+    ");
+        $consulta->execute();
+        return $consulta->fetchAll(PDO::FETCH_ASSOC); // Devuelve un array asociativo
+    }
+
+    public static function eliminarEstudiante($id)
+    {
+        // Conectar a la base de datos
+        $db = new Conexion();
+
+        // Verificar la conexión
+
+
+        // Preparar y ejecutar la consulta
+        $stmt = $db->prepare("DELETE FROM usuarios WHERE idUsuario = :id");
+        $stmt->bindParam("id", $id);
+
+        // Ejecutar la consulta
+        $resultado = $stmt->execute();
+
+        // Cerrar la conexión
+        $db = null;
+
+        // Retornar el resultado de la operación
+        return $resultado;
+    }
+
 
     public static function logout()
     {

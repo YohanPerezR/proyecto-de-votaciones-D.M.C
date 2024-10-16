@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <?php
+require_once("../model/Candidatos.php");
 session_start();
 if (!isset($_SESSION['ID'])) {
     $mensaje = "Debes iniciar sesion.";
     header("Location:../views/login.php");
 }
+
+$candidatos = Candidatos::mostrarCandidatosPorAño();
+
 
 ?>
 
@@ -54,62 +58,35 @@ if (!isset($_SESSION['ID'])) {
             <h2 class="text-3xl font-semibold mb-6 text-center">Candidatos</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Candidato 1 -->
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
-                    <img src="assets/images/juan_perez.jpg" alt="Juan Pérez" class="w-full h-48 object-cover rounded-lg mb-4">
-                    <h3 class="text-2xl font-semibold mb-2">Juan Pérez</h3>
-                    <p class="text-lg mb-2"><strong>Cargo:</strong> Presidente del Consejo Estudiantil</p>
-                    <p class="text-lg mb-4"><strong>Biografía:</strong> Juan Pérez es un estudiante de 11º con experiencia en liderazgo estudiantil y una gran pasión por el bienestar de sus compañeros.</p>
-                    <p class="text-lg mb-2"><strong>Propuestas:</strong></p>
-                    <ul class="list-disc list-inside mb-4">
-                        <li>Implementar un programa de tutorías entre pares.</li>
-                        <li>Crear un club de emprendimiento estudiantil.</li>
-                        <li>Organizar eventos culturales y deportivos mensuales.</li>
-                    </ul>
-                    <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 w-full">Votar por Juan Pérez</button>
-                </div>
+                <?php foreach ($candidatos as $candidato): ?>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                        <?php $imagenBase64 = base64_encode($candidato['Imagen']); ?>
+                        <img src="data:image/jpeg;base64,<?php echo $imagenBase64; ?>" alt="Imagen de <?php echo $candidato['Nombres']; ?>" class="w-full h-48 object-cover rounded-lg mb-4">
+                        <h3 class="text-2xl font-semibold mb-2"><?php echo $candidato['Nombres'] . " " . $candidato['Apellidos']; ?></h3>
+                        <p class="text-lg mb-2"><strong>Curso:</strong> <?php echo $candidato['Curso']; ?></p>
+                        <p class="text-lg mb-2"><strong>Campaña:</strong> <?php echo $candidato['Campana']; ?></p>
+                        <p class="text-lg mb-2"><strong>Propuestas:</strong></p>
+                        <ul class="list-disc list-inside mb-4">
+                            <?php
+                            $propuestas = explode(",", $candidato['Propuestas']);
+                            foreach ($propuestas as $propuesta): ?>
+                                <li><?php echo trim($propuesta); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
 
-                <!-- Candidato 2 -->
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
-                    <img src="assets/images/maria_gomez.jpg" alt="María Gómez" class="w-full h-48 object-cover rounded-lg mb-4">
-                    <h3 class="text-2xl font-semibold mb-2">María Gómez</h3>
-                    <p class="text-lg mb-2"><strong>Cargo:</strong> Vicepresidente del Consejo Estudiantil</p>
-                    <p class="text-lg mb-4"><strong>Biografía:</strong> María Gómez es una estudiante de 10º que ha participado activamente en diversas comisiones estudiantiles y tiene un fuerte compromiso con la inclusión.</p>
-                    <p class="text-lg mb-2"><strong>Propuestas:</strong></p>
-                    <ul class="list-disc list-inside mb-4">
-                        <li>Desarrollar un programa de bienestar mental y emocional.</li>
-                        <li>Establecer un consejo de diversidad e inclusión.</li>
-                        <li>Promover el reciclaje y la sostenibilidad en la escuela.</li>
-                    </ul>
-                    <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 w-full">Votar por María Gómez</button>
-                </div>
+                        <!-- Formulario para votar -->
+                        <form action="../controller/votar.php" method="POST">
+                            <input type="hidden" name="idCandidato" value="<?php echo $candidato['idCandidato']; ?>">
+                            <input type="hidden" name="idCampana" value="<?php echo $candidato['Id_Campana']; ?>">
+                            <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 w-full">
+                                Votar por <?php echo $candidato['Nombres']; ?>
+                            </button>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
 
-                <!-- Candidato 3 -->
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
-                    <img src="assets/images/carlos_martinez.jpg" alt="Carlos Martínez" class="w-full h-48 object-cover rounded-lg mb-4">
-                    <h3 class="text-2xl font-semibold mb-2">Carlos Martínez</h3>
-                    <p class="text-lg mb-2"><strong>Cargo:</strong> Secretario del Consejo Estudiantil</p>
-                    <p class="text-lg mb-4"><strong>Biografía:</strong> Carlos Martínez es un estudiante de 11º que se destaca en organización de eventos y ha demostrado habilidades sobresalientes en gestión de proyectos.</p>
-                    <p class="text-lg mb-2"><strong>Propuestas:</strong></p>
-                    <ul class="list-disc list-inside mb-4">
-                        <li>Crear un boletín informativo mensual para estudiantes.</li>
-                        <li>Organizar ferias de orientación vocacional.</li>
-                        <li>Facilitar espacios de comunicación entre estudiantes y administración.</li>
-                    </ul>
-                    <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 w-full">Votar por Carlos Martínez</button>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md">
-                    <img src="assets/images/juan_perez.jpg" alt="Juan Pérez" class="w-full h-48 object-cover rounded-lg mb-4">
-                    <h3 class="text-2xl font-semibold mb-2">Juan Pérez</h3>
-                    <p class="text-lg mb-2"><strong>Cargo:</strong> Presidente del Consejo Estudiantil</p>
-                    <p class="text-lg mb-4"><strong>Biografía:</strong> Juan Pérez es un estudiante de 11º con experiencia en liderazgo estudiantil y una gran pasión por el bienestar de sus compañeros.</p>
-                    <p class="text-lg mb-2"><strong>Propuestas:</strong></p>
-                    <ul class="list-disc list-inside mb-4">
-                        <li>Implementar un programa de tutorías entre pares.</li>
-                        <li>Crear un club de emprendimiento estudiantil.</li>
-                        <li>Organizar eventos culturales y deportivos mensuales.</li>
-                    </ul>
-                    <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 w-full">Votar por Juan Pérez</button>
-                </div>
+
+
             </div>
         </section>
     </main>
