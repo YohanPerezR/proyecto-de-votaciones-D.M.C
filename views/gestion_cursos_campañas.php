@@ -28,7 +28,8 @@ LEFT JOIN
 GROUP BY
     c.idCandidato, c.Nombres, c.Apellidos, cu.Curso, c.Imagen, c.Propuestas, camp.Nombre
 ORDER BY
-    camp.Nombre, NumeroVotos DESC");
+    camp.Nombre DESC
+");
 
 $consulta->execute();
 $Reportes = $consulta->fetchAll();
@@ -41,6 +42,7 @@ $Reportes = $consulta->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Cursos y Campañas</title>
+    <link rel="shortcut icon" href="../assets/images/logo-diegomon.ico" type="image/x-icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <script src="https://unpkg.com/jspdf-autotable"></script>
