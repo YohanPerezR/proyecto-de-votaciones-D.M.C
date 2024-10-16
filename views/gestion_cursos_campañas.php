@@ -95,7 +95,7 @@ $Reportes = $consulta->fetchAll();
                                 <tr>
                                     <th class="py-2 px-4 border-b">ID Curso</th>
                                     <th class="py-2 px-4 border-b">Curso</th>
-                                    <th class="py-2 px-4 border-b">Acciones</th>
+                                    <!--<th class="py-2 px-4 border-b">Acciones</th>-->
                                 </tr>
                             </thead>
                             <tbody>
@@ -103,11 +103,13 @@ $Reportes = $consulta->fetchAll();
                                     <tr>
                                         <td class="py-2 px-4 border-b text-center"><?php echo $curso['idCursos']; ?></td>
                                         <td class="py-2 px-4 border-b text-center"><?php echo $curso['Curso']; ?></td>
-                                        <td class="py-2 px-4 flex space-x-2">
+                                        <!--<td class="py-2 px-4 flex space-x-2">-->
+                                        <!--
                                             <form action="../controller/eliminarCurso.php" method="POST">
                                                 <input type="hidden" name="idCurso" value="<?php echo $curso['idCursos']; ?>">
                                                 <button type="submit" class="bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700">Eliminar</button>
                                             </form>
+                                            -->
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -145,7 +147,7 @@ $Reportes = $consulta->fetchAll();
                                 <tr>
                                     <th class="py-2 px-4 border-b">ID Campaña</th>
                                     <th class="py-2 px-4 border-b">Nombre</th>
-                                    <th class="py-2 px-4 border-b">Acciones</th>
+                                    <!--<th class="py-2 px-4 border-b">Acciones</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -153,11 +155,13 @@ $Reportes = $consulta->fetchAll();
                                     <tr>
                                         <td class="py-2 px-4 border-b text-center"><?php echo $campana['id_campana']; ?></td>
                                         <td class="py-2 px-4 border-b text-center"><?php echo $campana['nombre']; ?></td>
-                                        <td class="py-2 px-4 flex space-x-2">
+                                        <!--<td class="py-2 px-4 flex space-x-2"> -->
+                                        <!--
                                             <form action="../controller/eliminarCampana.php" method="POST">
                                                 <input type="hidden" name="idCampana" value="<?php echo $campana['id_campana']; ?>">
                                                 <button type="submit" class="bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700">Eliminar</button>
                                             </form>
+                                            -->
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

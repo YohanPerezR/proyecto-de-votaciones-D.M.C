@@ -103,7 +103,7 @@ $Reportes = $consulta->fetchAll();
                     <div class="mb-4">
                         <label class="block text-gray-700">ID Curso:</label>
                         <select id="id_Campana" name="id_Curso" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" required>
-                            <option value="">Seleccione una campaña</option>
+                            <option value="">Seleccione un Curso</option>
                             <?php foreach ($cursos as $curso): ?>
                                 <option value="<?php echo $curso['idCursos']; ?>">
                                     <?php echo $curso['Curso']; ?>
