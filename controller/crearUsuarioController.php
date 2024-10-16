@@ -1,6 +1,6 @@
 <?php
 
-require_once("../model/User.php");
+require_once("../model/Usuarios.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (

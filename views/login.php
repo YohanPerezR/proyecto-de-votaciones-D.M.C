@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+<?php
+
+
+
+
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -29,7 +35,7 @@
         <form action="../controller/loginUserController.php" method="post">
             <div class="mb-4">
                 <label for="Numero_Documento" class="block text-lg font-medium mb-2">No.Documento</label>
-                <input type="number" id="Numero_Documento" name="Numero_Documento" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                <input type="number" id="Numero_Documento" name="documento" class="w-full p-2 border border-gray-300 rounded-lg" required>
             </div>
             <div class="mb-6">
                 <label for="password" class="block text-lg font-medium mb-2">Contraseña</label>

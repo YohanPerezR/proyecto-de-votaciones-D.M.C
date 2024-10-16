@@ -1,27 +1,18 @@
 <?php
 
 require_once("../config/conexion.php");
-require_once("../model/User.php");
+require_once("../model/Usuarios.php");
 
 $db = new Conexion();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (
-        isset($_POST['Numero_Documento']) &&
+        isset($_POST['documento']) &&
         isset($_POST['password'])
     ) {
-
+        $documento = $_POST['documento'];
+        $contraseña = $_POST['password'];
         $db = new Conexion();
-
-        $consulta = $db->prepare("SELECT * FROM usuarios WHERE Nodocumento = :documento");
-        $consulta->bindParam(":documento", $documento);
-        $consulta->execute();
-        $registro = $consulta->fetchAll();
-        if ($registro['Contrasena'] ===  $contrasena) {
-            header("Location:../views/modulo_votacion.php");
-            exit();
-        } else {
-            echo "Datos Incorrectos papus";
-        }
+        Usuarios::login($documento,$contraseña);
     }
 }

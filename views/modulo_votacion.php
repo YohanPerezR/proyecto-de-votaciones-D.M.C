@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+<?php
+session_start();
+if (!isset($_SESSION['ID'])) {
+    $mensaje = "Debes iniciar sesion.";
+    header("Location:../views/login.php");
+}
+
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -26,11 +34,17 @@
     <header class="bg-blue-600 text-white py-4">
         <div class="container mx-auto flex justify-between items-center px-4">
             <h1 class="text-2xl font-bold">Sistema de Votaciones D.M.C</h1>
+            <div>
+                <?php echo $_SESSION['NOMBRES'] . " " . $_SESSION['APELLIDOS'] . " Con el rol de " . $_SESSION['ROL']; ?>
+            </div>
             <nav>
+                <!--
                 <a href="index.html" class="mx-2 hover:underline">Inicio</a>
                 <a href="#candidatos" class="mx-2 hover:underline">Candidatos</a>
                 <a href="#propuestas" class="mx-2 hover:underline">Propuestas</a>
                 <a href="login.php" class="mx-2 hover:underline bg-violet-600 px-6 py-2 border rounded-lg text-black transition ease-in-out hover:bg-violet-700 duration-500">Ingresar</a>
+                -->
+                <a href="../controller/logout.php" class="mx-2 hover:underline">Cerrar Session</a>
             </nav>
         </div>
     </header>

@@ -1,3 +1,15 @@
+<?php
+session_start();
+if (!isset($_SESSION['ID'])) {
+    $mensaje = "Debes iniciar sesion.";
+    header("Location:../views/login.php");
+} else {
+    if ($_SESSION['ROL'] != "Administrador") {
+        header("Location:../views/modulo_votacion.php");
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -27,7 +39,7 @@
             <h1 class="text-2xl font-bold">Gestión de Estudiantes</h1>
             <nav>
                 <a href="../index.html" class="mx-2 hover:underline">Inicio</a>
-                <a href="views/logout.php" class="mx-2 hover:underline bg-violet-600 px-6 py-2 border rounded-lg text-black transition ease-in-out hover:bg-violet-700 duration-500">Cerrar sesión</a>
+                <a href="../controller/logout.php" class="mx-2 hover:underline bg-violet-600 px-6 py-2 border rounded-lg text-black transition ease-in-out hover:bg-violet-700 duration-500">Cerrar sesión</a>
             </nav>
         </div>
     </header>
@@ -79,7 +91,17 @@
                         </tr>
                     </thead>
                     <tbody id="studentTableBody">
-                        <!-- Las filas de estudiantes se añadirán dinámicamente aquí -->
+                        <!-- Aca es el foreach de php para renderizar los estudiantes -->
+                        <tr class="border-b">
+                            <td class="py-2 px-4">${student.name}</td>
+                            <td class="py-2 px-4">${student.email}</td>
+                            <td class="py-2 px-4">${student.class}</td>
+                            <td class="py-2 px-4">
+                                <button onclick="editStudent(${student.id})" class="bg-yellow-500 text-white py-1 px-2 rounded-lg hover:bg-yellow-600">Editar</button>
+                                <button onclick="deleteStudent(${student.id})" class="bg-red-500 text-white py-1 px-2 rounded-lg hover:bg-red-600 ml-2">Eliminar</button>
+                            </td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -92,100 +114,6 @@
         </div>
     </footer>
 
-    <script>
-        // Datos de ejemplo (deberían ser obtenidos del backend)
-        const students = [{
-                id: 1,
-                name: "Juan Pérez",
-                email: "juan.perez@gmail.com",
-                class: "11º"
-            },
-            {
-                id: 2,
-                name: "María Gómez",
-                email: "maria.gomez@gmail.com",
-                class: "10º"
-            },
-            {
-                id: 3,
-                name: "Carlos Martínez",
-                email: "carlos.gmail.com",
-                class: "11º"
-            }
-        ];
-
-        // Función para renderizar la tabla de estudiantes
-        function renderTable() {
-            const tableBody = document.getElementById('studentTableBody');
-            tableBody.innerHTML = '';
-            students.forEach(student => {
-                const row = document.createElement('tr');
-                row.className = 'border-b';
-                row.innerHTML = `
-                    <td class="py-2 px-4">${student.name}</td>
-                    <td class="py-2 px-4">${student.email}</td>
-                    <td class="py-2 px-4">${student.class}</td>
-                    <td class="py-2 px-4">
-                        <button onclick="editStudent(${student.id})" class="bg-yellow-500 text-white py-1 px-2 rounded-lg hover:bg-yellow-600">Editar</button>
-                        <button onclick="deleteStudent(${student.id})" class="bg-red-500 text-white py-1 px-2 rounded-lg hover:bg-red-600 ml-2">Eliminar</button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Función para manejar el envío del formulario
-        document.getElementById('studentForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const id = document.getElementById('studentId').value;
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const studentClass = document.getElementById('class').value;
-
-            if (id) {
-                // Editar estudiante
-                const student = students.find(student => student.id == id);
-                student.name = name;
-                student.email = email;
-                student.class = studentClass;
-            } else {
-                // Agregar estudiante
-                const newStudent = {
-                    id: students.length ? Math.max(students.map(s => s.id)) + 1 : 1,
-                    name,
-                    email,
-                    class: studentClass
-                };
-                students.push(newStudent);
-            }
-
-            // Limpiar formulario y renderizar la tabla
-            document.getElementById('studentForm').reset();
-            document.getElementById('studentId').value = '';
-            renderTable();
-        });
-
-        // Función para editar un estudiante
-        function editStudent(id) {
-            const student = students.find(student => student.id === id);
-            document.getElementById('studentId').value = student.id;
-            document.getElementById('name').value = student.name;
-            document.getElementById('email').value = student.email;
-            document.getElementById('class').value = student.class;
-        }
-
-        // Función para eliminar un estudiante
-        function deleteStudent(id) {
-            const index = students.findIndex(student => student.id === id);
-            if (index > -1) {
-                students.splice(index, 1);
-                renderTable();
-            }
-        }
-
-        // Inicializar la tabla
-        renderTable();
-    </script>
 </body>
 
 </html>
