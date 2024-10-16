@@ -1,6 +1,7 @@
 <?php
 require_once("../model/Usuarios.php");
 require_once("../config/conexion.php");
+require_once("../model/Cursos.php");
 session_start();
 $dbReporte = new Conexion();
 
@@ -25,10 +26,16 @@ GROUP BY
     c.idCandidato, c.Nombres, c.Apellidos, cu.Curso, c.Imagen, c.Propuestas, camp.Nombre
 ORDER BY
     camp.Nombre, NumeroVotos DESC");
-
+$cursos = Cursos::mostrarCursos();
+$db = new Conexion();
+$consulta = $db->prepare("SELECT idRoles, Nombre FROM roles");
+$consulta->execute();
+$roles = $consulta->fetchAll();
 $consulta->execute();
 $Reportes = $consulta->fetchAll();
 
+$db = null;
+$dbReporte = null;
 
 if (!isset($_SESSION['ID'])) {
     $mensaje = "Debes iniciar sesión.";
@@ -116,10 +123,24 @@ $estudiantes = Usuarios::obtenerEstudiantes();
                     <input type="password" id="password" name="password" class="w-full p-2 border border-gray-300 rounded-lg" required>
 
                     <label for="class" class="block text-lg font-medium mb-2">Rol</label>
-                    <input type="text" id="class" name="class" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                    <select id="id_Campana" name="class" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" required>
+                        <option value="">Seleccione una campaña</option>
+                        <?php foreach ($roles as $rol): ?>
+                            <option value="<?php echo $rol['idRoles']; ?>">
+                                <?php echo $rol['Nombre']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
 
                     <label for="course" class="block text-lg font-medium mb-2">Curso</label>
-                    <input type="text" id="course" name="course" class="w-full p-2 border border-gray-300 rounded-lg" required>
+                    <select id="id_Campana" name="course" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400" required>
+                        <option value="">Seleccione una campaña</option>
+                        <?php foreach ($cursos as $curso): ?>
+                            <option value="<?php echo $curso['idCursos']; ?>">
+                                <?php echo $curso['Curso']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
 
                     <div class="flex justify-center">
                         <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Guardar</button>
